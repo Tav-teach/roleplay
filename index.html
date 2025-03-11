@@ -1,20 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Role-Play Game</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <h1>Role-Play Game: The Perfect Call</h1>
-  <div id="game">
-    <p id="task">Click "Start" to get a task!</p>
-    <button id="startButton">Start</button>
-    <p id="diceRoll"></p>
-    <button id="rollDice" style="display:none;">Roll Dice</button>
-    <p id="score">Score: 0</p>
-  </div>
-  <script src="script.js"></script>
-</body>
-</html>
+// Array of tasks for the role-play game
+const tasks = [
+  "Greet the other participant politely.",
+  "Propose a meeting time.",
+  "Introduce the agenda for the meeting.",
+  "Politely reject a suggested time.",
+  "Accept and confirm a meeting time.",
+  "Discuss the duration of the meeting.",
+  "Summarize and confirm the meeting details."
+];
+
+// Initialize the score
+let score = 0;
+
+// Ensure the page has loaded before accessing elements
+document.addEventListener("DOMContentLoaded", () => {
+  // Select elements from the DOM
+  const taskElement = document.getElementById("task");
+  const startButton = document.getElementById("startButton");
+  const rollDiceButton = document.getElementById("rollDice");
+  const diceRollElement = document.getElementById("diceRoll");
+  const scoreElement = document.getElementById("score");
+
+  // Start button functionality
+  startButton.addEventListener("click", () => {
+    // Pick a random task
+    const randomTask = tasks[Math.floor(Math.random() * tasks.length)];
+    taskElement.innerText = `Task: ${randomTask}`;
+    rollDiceButton.style.display = "inline-block"; // Show dice button
+    diceRollElement.innerText = ""; // Clear previous dice roll
+  });
+
+  // Roll dice functionality
+  rollDiceButton.addEventListener("click", () => {
+    // Generate a random dice roll between 1 and 6
+    const dice = Math.ceil(Math.random() * 6);
+    diceRollElement.innerText = `You rolled: ${dice}`;
+
+    // Update the score based on the dice roll
+    if (dice > 3) {
+      score += 10;
+      alert("Great job! You scored 10 points!");
+    } else {
+      alert("Keep trying! No points this time.");
+    }
+
+    // Update the score display
+    scoreElement.innerText = `Score: ${score}`;
+  });
+});
